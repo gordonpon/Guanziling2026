@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>出遊費用計算</title>
+
+    <style>
+        body {
+            font-family: sans-serif;
+            background-color: #f5f5f5;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .card {
+            background: #ffffff;
+            padding: 24px;
+            border-radius: 12px;
+            width: 100%;
+            max-width: 420px;
+            box-shadow: 0 0 8px rgba(0,0,0,0.1);
+        }
+
+        .title {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 16px;
+        }
+
+        .form-group {
+            margin-bottom: 14px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .label {
+            margin-bottom: 4px;
+            font-size: 14px;
+        }
+
+        input[type="number"] {
+            padding: 8px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+        }
+
+        input[readonly] {
+            background-color: #eee;
+            cursor: not-allowed;
+        }
+
+        .btn {
+            margin-top: 20px;
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+        }
+
+        .result {
+            margin-top: 20px;
+            padding: 12px;
+            background-color: #f0f8ff;
+            border-radius: 6px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="card">
+        <div class="title">出遊費用計算</div>
+
+        <!-- 欄位 1 -->
+        <div class="form-group">
+            <label class="label">人數</label>
+            <input id="p1" type="number" min="1" placeholder="請輸入人數">
+        </div>
+
+        <!-- 欄位 2 -->
+        <div class="form-group">
+            <label class="label">同工人數</label>
+            <input id="p2" type="number" min="1" placeholder="請輸入同工人數">
+        </div>
+
+        <!-- 欄位 3 -->
+        <div class="form-group">
+            <label class="label">小孩（110cm~150cm）</label>
+            <input id="p3" type="number" min="1" placeholder="請輸入人數">
+        </div>
+
+        <!-- 欄位 4 -->
+        <div class="form-group">
+            <label class="label">小孩（110cm以下）</label>
+            <input id="p4" type="number" min="1" placeholder="請輸入人數">
+        </div>
+
+        <!-- 欄位 5 -->
+        <div class="form-group">
+            <label class="label">車資（固定）</label>
+            <input id="feeBus" type="number" value="800" readonly>
+        </div>
+
+        <!-- 欄位 6 -->
+        <div class="form-group">
+            <label class="label">保險（固定）</label>
+            <input id="feeIns" type="number" value="500" readonly>
+        </div>
+
+        <!-- 欄位 7 -->
+        <div class="form-group">
+            <label class="label">餐費（固定）</label>
+            <input id="feeFood" type="number" value="300" readonly>
+        </div>
+
+        <button class="btn" onclick="calc()">計算</button>
+
+        <div id="result" class="result" style="display:none;"></div>
+    </div>
+
+    <script>
+        function calc() {
+            const p1 = Number(document.getElementById("p1").value);
+            const p2 = Number(document.getElementById("p2").value);
+            const p3 = Number(document.getElementById("p3").value);
+            const p4 = Number(document.getElementById("p4").value);
+
+            const feeBus = Number(document.getElementById("feeBus").value);
+            const feeIns = Number(document.getElementById("feeIns").value);
+            const feeFood = Number(document.getElementById("feeFood").value);
+
+            // 基礎驗證
+            if (p1 <= 0 || p2 <= 0 || p3 <= 0 || p4 <= 0) {
+                alert("所有人數欄位都必須大於 0");
+                return;
+            }
+
+            const totalPeople = p1 + p2 + p3 + p4;
+
+            const total = totalPeople * (feeBus + feeIns + feeFood);
+
+            document.getElementById("result").style.display = "block";
+            document.getElementById("result").innerText = 
+                `總金額：${total.toLocaleString()} 元`;
+        }
+    </script>
+
+</body>
+</html>
