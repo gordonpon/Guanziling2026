@@ -171,6 +171,6 @@ function calc() {
                     <td style="font-weight:bold;color:#007bff;">${total.toLocaleString()} 元</td>
                 </tr>
             </table>
-        </div>
+        </div>     
     `;
 }
