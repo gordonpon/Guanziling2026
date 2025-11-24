@@ -1,0 +1,431 @@
+/* ========== 基礎樣式 ========== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Microsoft JhengHei', 'PingFang TC', sans-serif;
+    background-color: #f5f5f5;
+    padding: 20px;
+    min-height: 100vh;
+}
+
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+.card {
+    background: #ffffff;
+    padding: 30px;
+    border-radius: 12px;
+    width: 100%;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.1);
+    display: flex;
+    gap: 30px;
+}
+
+/* ========== 表單區塊 ========== */
+.form-section {
+    flex: 1;
+    min-width: 320px;
+}
+
+.title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #333;
+    border-bottom: 3px solid #007bff;
+    padding-bottom: 10px;
+}
+
+.form-group {
+    margin-bottom: 16px;
+    display: flex;
+    flex-direction: column;
+}
+
+.label {
+    margin-bottom: 6px;
+    font-size: 15px;
+    font-weight: 500;
+    color: #555;
+}
+
+input[type="number"] {
+    padding: 10px 12px;
+    border-radius: 6px;
+    border: 1px solid #ddd;
+    font-size: 15px;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+input[type="number"]:focus {
+    outline: none;
+    border-color: #007bff;
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+}
+
+select {
+    padding: 10px 12px;
+    border-radius: 6px;
+    border: 1px solid #ddd;
+    background-color: #fff;
+    font-size: 15px;
+    cursor: pointer;
+    transition: border-color 0.3s;
+}
+
+select:focus {
+    outline: none;
+    border-color: #007bff;
+}
+
+input[readonly] {
+    background-color: #f0f0f0;
+    cursor: not-allowed;
+    color: #666;
+}
+
+.btn {
+    margin-top: 24px;
+    width: 100%;
+    padding: 12px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 17px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.1s;
+}
+
+.btn:hover {
+    background-color: #0056b3;
+}
+
+.btn:active {
+    transform: scale(0.98);
+}
+
+.result {
+    margin-top: 20px;
+    padding: 20px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+    position: sticky;
+    bottom: 0;
+    z-index: 10;
+}
+
+/* ========== 明細區塊 ========== */
+.detail-section {
+    flex: 1.5;
+    background: #fafafa;
+    padding: 20px;
+    border-radius: 12px;
+    border: 1px solid #e0e0e0;
+    max-height: 800px;
+    overflow-y: auto;
+}
+
+.detail-title {
+    font-size: 22px;
+    font-weight: bold;
+    margin-bottom: 16px;
+    color: #333;
+    border-bottom: 3px solid #28a745;
+    padding-bottom: 10px;
+}
+
+.detail-list {
+    list-style: none;
+    padding: 0;
+}
+
+.detail-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 16px;
+    font-size: 14px;
+    background: white;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+.detail-table th, .detail-table td {
+    border: 1px solid #e0e0e0;
+    padding: 10px 8px;
+    text-align: center;
+}
+
+.detail-table th {
+    background-color: #f8f9fa;
+    font-weight: 600;
+    color: #495057;
+}
+
+.detail-table tr:first-child th {
+    background-color: #007bff;
+    color: white;
+    font-size: 15px;
+}
+
+.detail-table tbody tr:hover {
+    background-color: #f8f9fa;
+}
+
+/* 自訂捲軸樣式 */
+.detail-section::-webkit-scrollbar {
+    width: 8px;
+}
+
+.detail-section::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+}
+
+.detail-section::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 10px;
+}
+
+.detail-section::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+/* ========== 平板 RWD (768px - 1024px) ========== */
+@media (max-width: 1024px) and (min-width: 769px) {
+    .card {
+        padding: 24px;
+        gap: 24px;
+    }
+
+    .title,
+    .detail-title {
+        font-size: 20px;
+    }
+
+    .detail-section {
+        flex: 1.2;
+        max-height: 600px;
+    }
+
+    .detail-table {
+        font-size: 13px;
+    }
+
+    .detail-table th, .detail-table td {
+        padding: 8px 6px;
+    }
+}
+
+/* ========== 平板直向與小平板 RWD (481px - 768px) ========== */
+@media (max-width: 768px) and (min-width: 481px) {
+    body {
+        padding: 16px;
+    }
+
+    .card {
+        flex-direction: column;
+        padding: 20px;
+        gap: 20px;
+    }
+
+    .form-section,
+    .detail-section {
+        min-width: 100%;
+        flex: none;
+    }
+
+    .detail-section {
+        max-height: 500px;
+    }
+
+    .title,
+    .detail-title {
+        font-size: 20px;
+    }
+
+    input[type="number"],
+    select {
+        padding: 11px;
+        font-size: 15px;
+    }
+
+    .btn {
+        padding: 13px;
+        font-size: 17px;
+    }
+
+    .result {
+        padding: 18px;
+        margin-top: 16px;
+    }
+
+    .result > div > div:first-child {
+        font-size: 15px;
+    }
+
+    .result > div > div:last-child {
+        font-size: 26px;
+    }
+
+    .detail-table {
+        font-size: 13px;
+    }
+}
+
+/* ========== 手機 RWD (最大 480px) ========== */
+@media (max-width: 480px) {
+    body {
+        padding: 12px;
+    }
+
+    .card {
+        flex-direction: column;
+        padding: 16px;
+        gap: 16px;
+    }
+
+    .form-section,
+    .detail-section {
+        min-width: 100%;
+        flex: none;
+    }
+
+    .form-section {
+        margin-bottom: 0;
+    }
+
+    .detail-section {
+        padding: 16px;
+        max-height: 400px;
+    }
+
+    .title {
+        font-size: 18px;
+        margin-bottom: 16px;
+        padding-bottom: 8px;
+    }
+
+    .detail-title {
+        font-size: 18px;
+        margin-bottom: 12px;
+        padding-bottom: 8px;
+    }
+
+    .form-group {
+        margin-bottom: 14px;
+    }
+
+    .label {
+        font-size: 14px;
+        margin-bottom: 5px;
+    }
+
+    input[type="number"],
+    input[readonly],
+    select {
+        padding: 12px;
+        font-size: 16px; /* 防止 iOS Safari 自動縮放 */
+    }
+
+    .btn {
+        padding: 14px;
+        font-size: 17px;
+        margin-top: 20px;
+    }
+
+    .result {
+        padding: 16px;
+        margin-top: 16px;
+    }
+
+    .result > div > div:first-child {
+        font-size: 14px;
+    }
+
+    .result > div > div:last-child {
+        font-size: 24px;
+    }
+
+    /* 表格響應式處理 */
+    .detail-table {
+        font-size: 12px;
+        display: block;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch; /* iOS 平滑滾動 */
+    }
+
+    .detail-table th,
+    .detail-table td {
+        padding: 8px 4px;
+        font-size: 12px;
+        white-space: nowrap;
+    }
+
+    .detail-table tr:first-child th {
+        font-size: 13px;
+    }
+}
+
+/* ========== 極小手機 RWD (最大 360px) ========== */
+@media (max-width: 360px) {
+    body {
+        padding: 8px;
+    }
+
+    .card {
+        padding: 12px;
+    }
+
+    .title,
+    .detail-title {
+        font-size: 16px;
+    }
+
+    .label {
+        font-size: 13px;
+    }
+
+    input[type="number"],
+    input[readonly],
+    select {
+        padding: 10px;
+        font-size: 15px;
+    }
+
+    .btn {
+        padding: 12px;
+        font-size: 16px;
+    }
+
+    .result {
+        padding: 14px;
+        margin-top: 14px;
+    }
+
+    .result > div > div:first-child {
+        font-size: 13px;
+    }
+
+    .result > div > div:last-child {
+        font-size: 22px;
+    }
+
+    .detail-table th,
+    .detail-table td {
+        padding: 6px 3px;
+        font-size: 11px;
+    }
+}
