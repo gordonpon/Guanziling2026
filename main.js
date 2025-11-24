@@ -30,10 +30,24 @@ function calc() {
     //     }
     // }
 
-    // ===== 規則 4：同工+家眷超過 3 人不可選二人房 =====
-    if ((employees + familyMembers) > 3 && (roomType === "r2" || roomType === "r2spa")) {
+    // ===== 規則 4：人數與房型限制 =====
+    const totalAdults = employees + familyMembers + children110to150 + childrenUnder110;
+    
+    // 少於 4 人不可選擇 4人房、6人房
+    if (totalAdults < 4 && (roomType === "r4" || roomType === "r4spa" || roomType === "r6")) {
+        let roomTypeName = "";
+        if (roomType === "r4") roomTypeName = "4人標準房";
+        else if (roomType === "r4spa") roomTypeName = "4人湯屋房、親子房、和室";
+        else if (roomType === "r6") roomTypeName = "6人湯屋房";
+        
+        alert(`同工、家眷及小孩人數加總為 ${totalAdults} 人，少於 4 人\n\n不可選擇「${roomTypeName}」\n\n請重新選擇房型`);
+        return;
+    }
+    
+    // 超過 3 人不可選擇 2-3人房
+    if (totalAdults > 3 && (roomType === "r2" || roomType === "r2spa")) {
         const roomTypeName = roomType === "r2" ? "2-3人標準房" : "2-3人湯屋房";
-        alert(`同工及家眷人數加總為 ${employees + familyMembers} 人，已超過 3 人\n\n不可選擇「${roomTypeName}」\n\n請重新選擇房型`);
+        alert(`同工、家眷及小孩人數加總為 ${totalAdults} 人，已超過 3 人\n\n不可選擇「${roomTypeName}」\n\n請重新選擇房型`);
         return;
     }
 
