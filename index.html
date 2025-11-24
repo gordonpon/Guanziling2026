@@ -126,31 +126,38 @@
     </div>
 
     <script>
-        function calc() {
-            const p1 = Number(document.getElementById("p1").value);
-            const p2 = Number(document.getElementById("p2").value);
-            const p3 = Number(document.getElementById("p3").value);
-            const p4 = Number(document.getElementById("p4").value);
+    function calc() {
+        const p1 = Number(document.getElementById("p1").value);
+        const p2 = Number(document.getElementById("p2").value);
+        const p3 = Number(document.getElementById("p3").value);
+        const p4 = Number(document.getElementById("p4").value);
 
-            const feeBus = Number(document.getElementById("feeBus").value);
-            const feeIns = Number(document.getElementById("feeIns").value);
-            const feeFood = Number(document.getElementById("feeFood").value);
+        const feeBus = Number(document.getElementById("feeBus").value);
+        const feeIns = Number(document.getElementById("feeIns").value);
+        const feeFood = Number(document.getElementById("feeFood").value);
 
-            // 基礎驗證
-            if (p1 <= 0 || p2 <= 0 || p3 <= 0 || p4 <= 0) {
-                alert("所有人數欄位都必須大於 0");
-                return;
-            }
-
-            const totalPeople = p1 + p2 + p3 + p4;
-
-            const total = totalPeople * (feeBus + feeIns + feeFood);
-
-            document.getElementById("result").style.display = "block";
-            document.getElementById("result").innerText = 
-                `總金額：${total.toLocaleString()} 元`;
+        // 基礎驗證
+        if (p1 <= 0 || p2 <= 0 || p3 <= 0 || p4 <= 0) {
+            alert("所有人數欄位都必須大於 0");
+            return;
         }
-    </script>
+
+        // ★★★ 新增的驗證：欄位 2 + 3 + 4 必須等於欄位 1 ★★★
+        if ((p2 + p3 + p4) !== p1) {
+            alert("同工 + 小孩人數總和必須等於『人數』欄位！");
+            return;
+        }
+
+        const totalPeople = p1 + p2 + p3 + p4;
+
+        const total = totalPeople * (feeBus + feeIns + feeFood);
+
+        document.getElementById("result").style.display = "block";
+        document.getElementById("result").innerText = 
+            `總金額：${total.toLocaleString()} 元`;
+    }
+</script>
+
 
 </body>
 </html>
