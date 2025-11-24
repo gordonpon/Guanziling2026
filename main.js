@@ -32,7 +32,7 @@ function calc() {
 
     // ===== 規則 4：同工+家眷超過 3 人不可選二人房 =====
     if ((employees + familyMembers) > 3 && (roomType === "r2" || roomType === "r2spa")) {
-        const roomTypeName = roomType === "r2" ? "二人房" : "二人房(含湯屋)";
+        const roomTypeName = roomType === "r2" ? "2-3人標準房" : "2-3人湯屋房";
         alert(`同工及家眷人數加總為 ${employees + familyMembers} 人，已超過 3 人\n\n不可選擇「${roomTypeName}」\n\n請重新選擇房型`);
         return;
     }
