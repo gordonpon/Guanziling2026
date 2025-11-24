@@ -47,8 +47,8 @@ function calc() {
     // --- 基本費 ---
     //const feeEmployeesBasic = 1000;
     const depositEmployee = 1000; // 保證金（同工）
-    const feeChild110to150Basic = 800;
-    const feeChildUnder110Basic = 0;
+    const feeChild110to150Basic = 1500;
+    const feeChildUnder110Basic = 500;
     const feeFamilyBasic = feeBus + feeIns + feeFood;
 
     // --- 房型加價（同工） ---
@@ -67,7 +67,7 @@ function calc() {
         case "r4": familyRoomPrice = 2200; break;
         case "r2": familyRoomPrice = 2500; break;
         case "r2spa": familyRoomPrice = 3000; break;
-        case "r4spa": familyRoomPrice = 25000; break;
+        case "r4spa": familyRoomPrice = 2500; break;
         case "r6": familyRoomPrice = 2500; break;
     }
 
