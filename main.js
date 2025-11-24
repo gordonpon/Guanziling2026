@@ -117,7 +117,7 @@ function calc() {
     for (let i = 1; i <= employees; i++) {
         const subtotal = employeeRoomAdd + depositEmployee;
         detailList.innerHTML += addDetailRow(
-            `同工，人數： ${i}`,
+            `同工${i}`,
             "-", "-", "-", employeeRoomAdd.toLocaleString(), depositEmployee.toLocaleString(),
             subtotal.toLocaleString()
         );
@@ -127,7 +127,7 @@ function calc() {
     for (let i = 1; i <= familyMembers; i++) {
         const subtotal = feeFamilyBasic + familyRoomPrice;
         detailList.innerHTML += addDetailRow(
-            `家眷，人數： ${i}`,
+            `家眷${i}`,
             feeBus.toLocaleString(),
             feeIns.toLocaleString(),
             feeFood.toLocaleString(),
@@ -139,7 +139,7 @@ function calc() {
     // === 小孩 110~150 ===
     for (let i = 1; i <= children110to150; i++) {
         detailList.innerHTML += addDetailRow(
-            `小孩(110cm~150cm)，人數： ${i}`,
+            `小孩(110cm~150cm)${i}`,
             "-", "-", "-",
             "-", "-",
             feeChild110to150Basic.toLocaleString()
@@ -149,20 +149,36 @@ function calc() {
     // === 小孩 110 以下 ===
     for (let i = 1; i <= childrenUnder110; i++) {
         detailList.innerHTML += addDetailRow(
-            `小孩(110cm↓)，人數： ${i}`,
+            `小孩(110cm↓)${i}`,
             "-", "-", "-",
             "-", "-",
             feeChildUnder110Basic.toLocaleString()
         );
     }
 
-    // ===== 顯示總金額（在明細區底部） =====
-    const resultElement = document.getElementById("result");
-    resultElement.style.display = "block";
-    resultElement.innerHTML = `
-        <div style="border-top: 3px solid #28a745; padding-top: 16px; margin-top: 10px;">
-            <div style="font-size: 16px; color: #666; margin-bottom: 8px;">總計金額</div>
-            <div style="font-size: 28px; font-weight: bold; color: #fff;">${total.toLocaleString()} 元</div>
+    // ===== 動態插入總計表格：移出 detail-section，置於獨立 summary-section =====
+    const summarySection = document.getElementById("summarySection");
+    summarySection.innerHTML = `
+        <div class="summary-wrapper">
+            <table class="detail-table summary-table">
+                <tr>
+                    <th colspan="5">總計</th>
+                </tr>
+                <tr>
+                    <th>同工</th>
+                    <th>家眷</th>
+                    <th>小孩(110~150)</th>
+                    <th>小孩(110↓)</th>
+                    <th>總金額</th>
+                </tr>
+                <tr>
+                    <td>${employees}</td>
+                    <td>${familyMembers}</td>
+                    <td>${children110to150}</td>
+                    <td>${childrenUnder110}</td>
+                    <td style="font-weight:bold;color:#007bff;">${total.toLocaleString()} 元</td>
+                </tr>
+            </table>
         </div>
     `;
 }
