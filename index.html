@@ -3,191 +3,91 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <script src="main.js"></script>
     <title>出遊費用計算</title>
 
-    <style>
-        body {
-            font-family: sans-serif;
-            background-color: #f5f5f5;
-            padding: 20px;
-            display: flex;
-            justify-content: center;
-        }
-
-        .card {
-            background: #ffffff;
-            padding: 24px;
-            border-radius: 12px;
-            width: 100%;
-            max-width: 420px;
-            box-shadow: 0 0 8px rgba(0,0,0,0.1);
-        }
-
-        .title {
-            font-size: 20px;
-            font-weight: bold;
-            margin-bottom: 16px;
-        }
-
-        .form-group {
-            margin-bottom: 14px;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .label {
-            margin-bottom: 4px;
-            font-size: 14px;
-        }
-
-        input[type="number"] {
-            padding: 8px;
-            border-radius: 6px;
-            border: 1px solid #ccc;
-        }
-
-        select {
-            padding: 8px;
-            border-radius: 6px;
-            border: 1px solid #ccc;
-            background-color: #fff;
-            font-size: 14px;
-        }
-
-        input[readonly] {
-            background-color: #eee;
-            cursor: not-allowed;
-        }
-
-        .btn {
-            margin-top: 20px;
-            width: 100%;
-            padding: 10px;
-            background-color: #007bff;
-            color: white;
-            border: none;
-            border-radius: 6px;
-            font-size: 16px;
-        }
-
-        .result {
-            margin-top: 20px;
-            padding: 12px;
-            background-color: #f0f8ff;
-            border-radius: 6px;
-            font-size: 18px;
-            font-weight: bold;
-        }
-    </style>
+    
 </head>
 
 <body>
 
-    <div class="card">
-        <div class="title">出遊費用計算</div>
+    <div class="container">
+        <div class="card">
+            <!-- 左側：表單區塊 -->
+            <div class="form-section">
+                <div class="title">出遊費用計算</div>
+        
+                <!-- 欄位 1 -->
+                <div class="form-group">
+                    <label class="label">參加人數</label>
+                    <input id="totalPeople" type="number" min="1" placeholder="請輸入參加人數">
+                </div>
+        
+                <!-- 欄位 2 -->
+                <div class="form-group">
+                    <label class="label">同工人數</label>
+                    <input id="employees" type="number" min="1" placeholder="請輸入同工人數">
+                </div>
+        
+                <div class="form-group">
+                    <label class="label">家眷人數</label>
+                    <input id="familyMembers" type="number" min="1" placeholder="請輸入家眷人數">
+                </div>
+        
+                <!-- 欄位 3 -->
+                <div class="form-group">
+                    <label class="label">小孩（110cm~150cm）</label>
+                    <input id="children110to150" type="number" min="1" placeholder="請輸入人數">
+                </div>
+        
+                <!-- 欄位 4 -->
+                <div class="form-group">
+                    <label class="label">小孩（110cm以下）</label>
+                    <input id="childrenUnder110" type="number" min="1" placeholder="請輸入人數">
+                </div>
+        
+                <div class="form-group">
+                    <label class="label">房型選擇</label>
+                    <select id="roomType">
+                        <option value="r2">二人房</option>
+                        <option value="r4">四人房</option>
+                        <option value="r2spa">二人房(含湯屋)</option>
+                        <option value="r4spa">四人房(含湯屋)</option>
+                        <option value="r6">六人房</option>
+                    </select>
+                </div> 
+        
+                <!-- 欄位 5 -->
+                <div class="form-group">
+                    <label class="label">車資（固定）</label>
+                    <input id="feeBus" type="number" value="800" readonly>
+                </div>
+        
+                <!-- 欄位 6 -->
+                <div class="form-group">
+                    <label class="label">保險（固定）</label>
+                    <input id="feeIns" type="number" value="500" readonly>
+                </div>
+        
+                <!-- 欄位 7 -->
+                <div class="form-group">
+                    <label class="label">餐費（固定）</label>
+                    <input id="feeFood" type="number" value="300" readonly>
+                </div>
+        
+        
+                <button class="btn" onclick="calc()">計算</button>
+            </div>
 
-        <!-- 欄位 1 -->
-        <div class="form-group">
-            <label class="label">參加人數</label>
-            <input id="totalPeople" type="number" min="1" placeholder="請輸入參加人數">
+            <!-- 右側：明細區塊 -->
+            <div class="detail-section">
+                <div class="detail-title">費用明細</div>
+                <ul id="detailList" class="detail-list"></ul>
+                <div id="result" class="result" style="display:none;"></div>
+            </div>
         </div>
-
-        <!-- 欄位 2 -->
-        <div class="form-group">
-            <label class="label">同工人數</label>
-            <input id="employees" type="number" min="1" placeholder="請輸入同工人數">
-        </div>
-
-        <div class="form-group">
-            <label class="label">家眷人數</label>
-            <input id="familyMembers" type="number" min="1" placeholder="請輸入家眷人數">
-        </div>
-
-        <!-- 欄位 3 -->
-        <div class="form-group">
-            <label class="label">小孩（110cm~150cm）</label>
-            <input id="children110to150" type="number" min="1" placeholder="請輸入人數">
-        </div>
-
-        <!-- 欄位 4 -->
-        <div class="form-group">
-            <label class="label">小孩（110cm以下）</label>
-            <input id="childrenUnder110" type="number" min="1" placeholder="請輸入人數">
-        </div>
-
-        <div class="form-group">
-            <label class="label">房型選擇</label>
-            <select id="roomType">
-                <option value="r2">二人房</option>
-                <option value="r4">四人房</option>
-                <option value="r2spa">二人房(含湯屋)</option>
-                <option value="r4spa">四人房(含湯屋)</option>
-                <option value="r6">六人房</option>
-            </select>
-        </div> 
-
-        <!-- 欄位 5 -->
-        <div class="form-group">
-            <label class="label">車資（固定）</label>
-            <input id="feeBus" type="number" value="800" readonly>
-        </div>
-
-        <!-- 欄位 6 -->
-        <div class="form-group">
-            <label class="label">保險（固定）</label>
-            <input id="feeIns" type="number" value="500" readonly>
-        </div>
-
-        <!-- 欄位 7 -->
-        <div class="form-group">
-            <label class="label">餐費（固定）</label>
-            <input id="feeFood" type="number" value="300" readonly>
-        </div>
-
-        <div class="form-group">
-            <label class="label">預計金額</label>
-            <input id="expectedAmount" type="number" value="0" readonly>
-        </div>
-
-        <button class="btn" onclick="calc()">計算</button>
-
-        <div id="result" class="result" style="display:none;"></div>
-
     </div>
-
-    <script>
-    function calc() {
-        const totalPeople = Number(document.getElementById("totalPeople").value);
-        const employees = Number(document.getElementById("employees").value);
-        const familyMembers = Number(document.getElementById("familyMembers").value);
-        const children110to150 = Number(document.getElementById("children110to150").value);
-        const childrenUnder110 = Number(document.getElementById("childrenUnder110").value);
-
-        const feeBus = Number(document.getElementById("feeBus").value);
-        const feeIns = Number(document.getElementById("feeIns").value);
-        const feeFood = Number(document.getElementById("feeFood").value);
-
-        // 基礎驗證
-        if (totalPeople <= 0) {
-            alert("人數不可為 0");
-            return;
-        }
-
-        // ★★★ 新增的驗證：欄位 2 + 3 + 4 必須等於欄位 1 ★★★
-        if ((employees + familyMembers + children110to150 + childrenUnder110) !== totalPeople) {
-            alert("同工 + 家眷 + 小孩人數總和必須等於參加人數");
-            return;
-        }
-
-        totalPeople = employees + familyMembers + children110to150 + childrenUnder110;
-        const total = totalPeople * (feeBus + feeIns + feeFood);
-
-        document.getElementById("result").style.display = "block";
-        document.getElementById("result").innerText = 
-            `總金額：${total.toLocaleString()} 元`;
-    }
-</script>
-
 
 </body>
 </html>
