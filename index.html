@@ -46,6 +46,14 @@
             border: 1px solid #ccc;
         }
 
+        select {
+            padding: 8px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+            background-color: #fff;
+            font-size: 14px;
+        }
+
         input[readonly] {
             background-color: #eee;
             cursor: not-allowed;
@@ -80,27 +88,43 @@
 
         <!-- 欄位 1 -->
         <div class="form-group">
-            <label class="label">人數</label>
-            <input id="p1" type="number" min="1" placeholder="請輸入人數">
+            <label class="label">參加人數</label>
+            <input id="totalPeople" type="number" min="1" placeholder="請輸入參加人數">
         </div>
 
         <!-- 欄位 2 -->
         <div class="form-group">
             <label class="label">同工人數</label>
-            <input id="p2" type="number" min="1" placeholder="請輸入同工人數">
+            <input id="employees" type="number" min="1" placeholder="請輸入同工人數">
+        </div>
+
+        <div class="form-group">
+            <label class="label">家眷人數</label>
+            <input id="familyMembers" type="number" min="1" placeholder="請輸入家眷人數">
         </div>
 
         <!-- 欄位 3 -->
         <div class="form-group">
             <label class="label">小孩（110cm~150cm）</label>
-            <input id="p3" type="number" min="1" placeholder="請輸入人數">
+            <input id="children110to150" type="number" min="1" placeholder="請輸入人數">
         </div>
 
         <!-- 欄位 4 -->
         <div class="form-group">
             <label class="label">小孩（110cm以下）</label>
-            <input id="p4" type="number" min="1" placeholder="請輸入人數">
+            <input id="childrenUnder110" type="number" min="1" placeholder="請輸入人數">
         </div>
+
+        <div class="form-group">
+            <label class="label">房型選擇</label>
+            <select id="roomType">
+                <option>二人房</option>
+                <option>四人房</option>
+                <option>二人房(含湯屋)</option>
+                <option>四人房(含湯屋)</option>
+                <option>六人房</option>
+            </select>
+        </div>  
 
         <!-- 欄位 5 -->
         <div class="form-group">
@@ -120,36 +144,42 @@
             <input id="feeFood" type="number" value="300" readonly>
         </div>
 
+        <div class="form-group">
+            <label class="label">預計金額</label>
+            <input id="expectedAmount" type="number" value="0" readonly>
+        </div>
+
         <button class="btn" onclick="calc()">計算</button>
 
         <div id="result" class="result" style="display:none;"></div>
+
     </div>
 
     <script>
     function calc() {
-        const p1 = Number(document.getElementById("p1").value);
-        const p2 = Number(document.getElementById("p2").value);
-        const p3 = Number(document.getElementById("p3").value);
-        const p4 = Number(document.getElementById("p4").value);
+        const totalPeople = Number(document.getElementById("totalPeople").value);
+        const employees = Number(document.getElementById("employees").value);
+        const familyMembers = Number(document.getElementById("familyMembers").value);
+        const children110to150 = Number(document.getElementById("children110to150").value);
+        const childrenUnder110 = Number(document.getElementById("childrenUnder110").value);
 
         const feeBus = Number(document.getElementById("feeBus").value);
         const feeIns = Number(document.getElementById("feeIns").value);
         const feeFood = Number(document.getElementById("feeFood").value);
 
         // 基礎驗證
-        if (p1 <= 0 || p2 <= 0 || p3 <= 0 || p4 <= 0) {
-            alert("所有人數欄位都必須大於 0");
+        if (totalPeople <= 0) {
+            alert("人數不可為 0");
             return;
         }
 
         // ★★★ 新增的驗證：欄位 2 + 3 + 4 必須等於欄位 1 ★★★
-        if ((p2 + p3 + p4) !== p1) {
-            alert("同工 + 小孩人數總和必須等於『人數』欄位！");
+        if ((employees + familyMembers + children110to150 + childrenUnder110) !== totalPeople) {
+            alert("同工 + 家眷 + 小孩人數總和必須等於參加人數");
             return;
         }
 
-        const totalPeople = p1 + p2 + p3 + p4;
-
+        totalPeople = employees + familyMembers + children110to150 + childrenUnder110;
         const total = totalPeople * (feeBus + feeIns + feeFood);
 
         document.getElementById("result").style.display = "block";
