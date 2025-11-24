@@ -45,7 +45,8 @@ function calc() {
 
 
     // --- 基本費 ---
-    const feeEmployeesBasic = 1000;
+    //const feeEmployeesBasic = 1000;
+    const depositEmployee = 1000; // 保證金（同工）
     const feeChild110to150Basic = 800;
     const feeChildUnder110Basic = 0;
     const feeFamilyBasic = feeBus + feeIns + feeFood;
@@ -71,7 +72,7 @@ function calc() {
     }
 
     // ===== 合計 =====
-    const feeEmpTotal = employees * (feeEmployeesBasic + employeeRoomAdd);
+    const feeEmpTotal = employees * (employeeRoomAdd + depositEmployee);
     const feeFamTotal = familyMembers * (feeFamilyBasic + familyRoomPrice);
     const feeChild110to150Total = children110to150 * feeChild110to150Basic;
     const feeChildUnder110Total = childrenUnder110 * feeChildUnder110Basic;
@@ -86,17 +87,18 @@ function calc() {
     const detailList = document.getElementById("detailList");
     detailList.innerHTML = "";
 
-    function addDetailRow(label, bus, ins, food, room, totalRow) {
+    function addDetailRow(label, bus, ins, food, room, deposit, totalRow) {
         return `
         <table class="detail-table">
             <tr>
-                <th colspan="5">${label}</th>
+                <th colspan="6">${label}</th>
             </tr>
             <tr>
                 <th>車資</th>
                 <th>保險</th>
                 <th>餐費</th>
                 <th>房型/加價</th>
+                <th>保證金</th>
                 <th>小計</th>
             </tr>
             <tr>
@@ -104,6 +106,7 @@ function calc() {
                 <td>${ins}</td>
                 <td>${food}</td>
                 <td>${room}</td>
+                <td>${deposit}</td>
                 <td>${totalRow}</td>
             </tr>
         </table>
@@ -112,10 +115,10 @@ function calc() {
 
     // === 同工 ===
     for (let i = 1; i <= employees; i++) {
-        const subtotal = feeEmployeesBasic + employeeRoomAdd;
+        const subtotal = employeeRoomAdd + depositEmployee;
         detailList.innerHTML += addDetailRow(
             `同工，人數： ${i}`,
-            "-", "-", "-", employeeRoomAdd.toLocaleString(),
+            "-", "-", "-", employeeRoomAdd.toLocaleString(), depositEmployee.toLocaleString(),
             subtotal.toLocaleString()
         );
     }
@@ -128,7 +131,7 @@ function calc() {
             feeBus.toLocaleString(),
             feeIns.toLocaleString(),
             feeFood.toLocaleString(),
-            familyRoomPrice.toLocaleString(),
+            familyRoomPrice.toLocaleString(), "-",
             subtotal.toLocaleString()
         );
     }
@@ -136,9 +139,9 @@ function calc() {
     // === 小孩 110~150 ===
     for (let i = 1; i <= children110to150; i++) {
         detailList.innerHTML += addDetailRow(
-            `小孩(110–150)，人數： ${i}`,
+            `小孩(110cm~150cm)，人數： ${i}`,
             "-", "-", "-",
-            "-",
+            "-", "-",
             feeChild110to150Basic.toLocaleString()
         );
     }
@@ -146,9 +149,9 @@ function calc() {
     // === 小孩 110 以下 ===
     for (let i = 1; i <= childrenUnder110; i++) {
         detailList.innerHTML += addDetailRow(
-            `小孩(110↓)，人數： ${i}`,
+            `小孩(110cm↓)，人數： ${i}`,
             "-", "-", "-",
-            "-",
+            "-", "-",
             feeChildUnder110Basic.toLocaleString()
         );
     }
